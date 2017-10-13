@@ -1,0 +1,8 @@
+{
+    "name": "rhapi-client",
+    "version": "0.1.13",
+    "main": "rhapi-client.js",
+    "dependencies": {
+        "node-rest-client": "^3.1.0"
+    }
+}
