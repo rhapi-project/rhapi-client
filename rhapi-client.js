@@ -2,144 +2,169 @@ class Client {
     constructor (baseUrl) {
         var THIS = this;
         this.baseUrl = baseUrl;
-        /*if (this.baseUrl == "") {
-            switch (clientSelected) {
-            case ("Correspondant") :
-                this.baseUrl = "https://demo.rhapi.net/demo01/Correspondants";
-                break;
-            case ("Images") :
-                this.baseUrl = "https://demo.rhapi.net/demo01/Images";
-                break;
-            }
-        }*/
-        
-        //console.log("clientSelected : " + clientSelected);
-        //console.log("this.baseUrl : " + this.baseUrl);
-        
         this.Administration = {
-            read : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, );
+            read : function (params, callback) {
+                var url = THIS.baseUrl + "/Administration" + THIS.getPrepare(THIS, "Administration", "read", params);
+                console.log("url (before get()) : " + url);
+                console.log("THIS.isString(params) : " + THIS.isString(params));
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             }
         }
         
         this.CCAM = {
-            read : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            read : function (params, callback) {
+                var url = THIS.baseUrl + "/CCAM" + THIS.getPrepare(THIS, "CCAM", "read", params);
+                console.log("url (before get()) : " + url);
+                console.log("THIS.encodeQueryData(params) : " + THIS.encodeQueryData(params));
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            readAll : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            readAll : function (params, callback) {
+                console.log("-- CCAM readAll --");
+                var url = THIS.baseUrl + "/CCAM" + THIS.getPrepare(THIS, "CCAM", "readAll", params);
+                console.log("url (before get()) : " + url);
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            contextes : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            contextes : function (params, callback) {
+                var url = THIS.baseUrl + "/CCAM/contextes";
+                console.log("url (before get()) : " + url);
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            tarif : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            tarif : function (params, callback) {
+                var url = THIS.baseUrl + "/CCAM" + THIS.getPrepare(THIS, "CCAM", "tarif", params);
+                console.log("url (before get()) : " + url);
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             }
         }
         
         this.Correspondants = {
-            create : function (url, params, callback) {
-                //console.log("THIS.baseUrl + url : " + THIS.baseUrl + url);
-                THIS.post(THIS.baseUrl + url, params, callback);
+            create : function (params, callback) {
+                //params.Content-Type = "application/json";
+                //params.contentType = "application/json";
+                //params.header = "Content-Type: application/json";
+                THIS.post(THIS.baseUrl + "/Correspondants", params, callback);
             },
             
-            read : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            read : function (params, callback) {
+                var url = THIS.baseUrl + "/Correspondants" + THIS.getPrepare(THIS, "Correspondants", "read", params);
+                console.log("url (before get()) : " + url);
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            readAll : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            readAll : function (params, callback) {
+                var url = THIS.baseUrl + "/Correspondants" + THIS.getPrepare(THIS, "Correspondants", "readAll", params);
+                console.log("url (before get()) : " + url);
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            update : function (url, params, callback) {
-                THIS.put(THIS.baseUrl + url, params, callback);
+            update : function (params, callback) {
+                var url = THIS.baseUrl + "/Correspondants" + THIS.getPrepare(THIS, "Correspondants", "update", params);
+                console.log("url (before get()) : " + url);
+                THIS.put(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            destroy : function (url, params, callback) {
-                THIS.delete(THIS.baseUrl + url, params, callback);
+            destroy : function (params, callback) {
+                var url = THIS.baseUrl + "/Correspondants" + THIS.getPrepare(THIS, "Correspondants", "destroy", params);
+                console.log("url (before get()) : " + url);
+                THIS.delete(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            completion : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            completion : function (params, callback) {
+                var url = THIS.baseUrl + "/Correspondants" + THIS.getPrepare(THIS, "Correspondants", "completion", params);
+                console.log("url (before get()) : " + url);
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             }
         }
         
         this.Images = {
-            create : function (url, params, callback) {
-                THIS.post(THIS.baseUrl + url, params, callback);
+            create : function (params, callback) {
+                THIS.post(THIS.baseUrl + "/Images", params, callback);
             },
             
-            read : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            read : function (params, callback) {
+                var url = THIS.baseUrl + "/Images" + THIS.getPrepare(THIS, "Images", "read", params);
+                console.log("url (before get()) : " + url);
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            readAll : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            readAll : function (params, callback) {
+                var url = THIS.baseUrl + "/Images" + THIS.getPrepare(THIS, "Images", "readAll", params);
+                console.log("url (before get()) : " + url);
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            update : function (url, params, callback) {
-                THIS.put(THIS.baseUrl + url, params, callback);
+            update : function (params, callback) {
+                var url = THIS.baseUrl + "/Images" + THIS.getPrepare(THIS, "Images", "update", params);
+                console.log("url (before get()) : " + url);
+                THIS.put(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            destroy : function (url, params, callback) {
-                THIS.delete(THIS.baseUrl + url, params, callback);
+            destroy : function (params, callback) {
+                var url = THIS.baseUrl + "/Images" + THIS.getPrepare(THIS, "Images", "destroy", params);
+                console.log("url (before get()) : " + url);
+                THIS.delete(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            dupliquer : function (url, params, callback) {
-                THIS.post(THIS.baseUrl + url, params, callback);
+            dupliquer : function (params, callback) {
+                var url = THIS.baseUrl + "/Images" + THIS.getPrepare(THIS, "Images", "dupliquer", params);
+                console.log("url (before get()) : " + url);
+                THIS.post(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             }
         }
         
         this.MonCompte = {
-            read : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            read : function (params, callback) {
+                THIS.get(THIS.baseUrl + "/MonCompte", params, callback);
             },
             
-            update : function (url, params, callback) {
-                THIS.put(THIS.baseUrl + url, params, callback);
+            update : function (params, callback) {
+                THIS.put(THIS.baseUrl + "/MonCompte", params, callback);
             }
         }
         
         this.Patients = {
-            create : function (url, params, callback) {
-                THIS.post(THIS.baseUrl + url, params, callback);
+            create : function (params, callback) {
+                THIS.post(THIS.baseUrl + "/Patients", params, callback);
             },
             
-            read : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            read : function (params, callback) {
+                var url = THIS.baseUrl + "/Patients" + THIS.getPrepare(THIS, "Patients", "read", params);
+                console.log("url (before get()) : " + url);
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            readAll : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            readAll : function (params, callback) {
+                var url = THIS.baseUrl + "/Patients" + THIS.getPrepare(THIS, "Patients", "readAll", params);
+                console.log("url (before get()) : " + url);
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            update : function (url, params, callback) {
-                THIS.put(THIS.baseUrl + url, params, callback);
+            update : function (params, callback) {
+                var url = THIS.baseUrl + "/Patients" + THIS.getPrepare(THIS, "Patients", "update", params);
+                console.log("url (before get()) : " + url);
+                THIS.put(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            destroy : function (url, params, callback) {
-                THIS.delete(THIS.baseUrl + url, params, callback);
+            destroy : function (params, callback) {
+                var url = THIS.baseUrl + "/Patients" + THIS.getPrepare(THIS, "Patients", "destroy", params);
+                console.log("url (before get()) : " + url);
+                THIS.delete(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            age : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            age : function (params, callback) {
+                var url = THIS.baseUrl + "/Patients" + THIS.getPrepare(THIS, "Patients", "age", params);
+                console.log("url (before get()) : " + url);
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             },
             
-            completion : function (url, params, callback) {
-                THIS.get(THIS.baseUrl + url, params, callback);
+            completion : function (params, callback) {
+                var url = THIS.baseUrl + "/Patients" + THIS.getPrepare(THIS, "Patients", "completion", params);
+                console.log("url (before get()) : " + url);
+                THIS.get(url, (THIS.isString(params) || !isNaN(params))?{}:params, callback);
             }
         }
-        
-        //var clientNodeRestClient = require("rhapi-client-node-rest-client");
-        
-        //switch(clientSelected) {
-        //case ("node-rest-client") :
-            //this.client = new clientNodeRestClient.NodeRestClient();
-        //    break;
-        //}
         
         this.client = new NodeRestClient();
     }
@@ -150,6 +175,74 @@ class Client {
     
     clientSet (valNew) {
         this.client = valNew;
+    }
+    
+    encodeQueryData(data) {
+        let ret = [];
+        for (let d in data)
+        ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
+        return ret.join('&');
+    }
+    
+    getPrepare(THIS, group, method, params) {
+        console.log("============");
+        console.log("====== getPrepare ======");
+        console.log("============");
+        console.log("group : " + group);
+        console.log("method : " + method);
+        var url = "";
+        if (typeof params != "undefined") {
+            if (isNaN(params) && !THIS.isString(params)) {
+                console.log("params :");
+                console.dir(params);
+                
+                if (group != "CCAM") {
+                    // Groupes "Correspondants", "Patients", "Images".
+                    if (typeof params.id != "undefined")
+                        url += "/" + encodeURIComponent(params.id);
+                    else if (method == "completion")
+                        url += "/completion"
+                    
+                    if (method == "age")
+                        url += "/age";
+                    if (method != "dupliquer")
+                        url += "?" + THIS.encodeQueryData(params);
+                }
+                
+                if (group == "CCAM") {
+                    var code = "";
+                    if (typeof params.code != "undefined") {
+                        code = encodeURIComponent(params.code);
+                    }
+                    
+                    if (method == "readAll")
+                        url += "?" + THIS.encodeQueryData(params);
+                    else if (method != "contextes")
+                        url += "/" + code;
+                    
+                    switch (method) {
+                    case ("tarif") :
+                        url += "/tarif?" + THIS.encodeQueryData(params);
+                        break;
+                    }
+                    
+                } else if (group == "Images" && method == "dupliquer") {
+                    url += "/dupliquer";
+                }
+            } else {
+                if (group == "Administration" || group != "Administration" && !isNaN(params))
+                    url += "/" + encodeURIComponent(params);
+                if (method == "age")
+                    url += "/age";
+                else if (group == "Images" && method == "dupliquer")
+                    url += "/dupliquer";
+            }
+        }
+        console.log("url : " + url);
+        console.log("============");
+        console.log("====== End of getPrepare2 ======");
+        console.log("============");
+        return url;
     }
     
     get (url, params, callback) {
@@ -166,6 +259,10 @@ class Client {
     
     delete (url, params, callback) {
         this.client.delete(url, params, callback);
+    }
+    
+    isString (obj) {
+        return (Object.prototype.toString.call(obj) === '[object String]');
     }
     
     callbackReturnTest (datas, response) {
