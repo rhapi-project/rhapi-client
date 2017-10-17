@@ -70,7 +70,7 @@ On utilise la notation pointée pour appeler un objet qui correspond à un nom d
     var options = {  
         modifiedSince: 2  
     };  
-    client.Patients.read(65, options, success, error);// Récupère le patient qui a pour identifiant 65.
+    client.Patients.read(search, options, success, error);// Récupère le patient qui a pour identifiant 65.
 
 
 ##### exemple avec un *readAll*
