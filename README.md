@@ -1,17 +1,17 @@
 # rhapi-client
 Client RHAPI Node.js
 
-###### Manuel de la version alpha 0.4.1
+###### Manuel de la version alpha 0.4.2
 
-### Installation
+## Installation
 
 
 npm install rhapi-client
 
 
-### Usage
+## Usage
 
-##### Instancier un *client*
+### Instancier un *client*
 
 
     var module = require("rhapi-client");
@@ -23,13 +23,13 @@ Quand ou un objet **client** est instancié, il reçoit comme argument l'adresse
     var client = new module.Client("https://demo.rhapi.net/demo01");
 
 
-##### Appeler une méthode
+### Appeler une méthode
 
 
 On utilise la notation pointée pour appeler un objet qui correspond à un nom du groupe (CCAM, Patients...) puis une méthode pour le type de requête (create, read, readAll...).
 
 
-##### exemple avec un *create*
+### exemple avec un *create*
 
 
 **args** contient les données du patient qui va être créé. Il est possible de renseigner maintenant toutes les données ou seulement certaines. Une méthode **update** sera toujours possible plus tard pour mettre à jour le patient.
@@ -59,7 +59,7 @@ On utilise la notation pointée pour appeler un objet qui correspond à un nom d
     }
 
 
-##### exemple avec un *read*
+### exemple avec un *read*
 
 
 **search** correspond à un identifiant ou un code d'acte.  
@@ -73,7 +73,7 @@ On utilise la notation pointée pour appeler un objet qui correspond à un nom d
     client.Patients.read(search, options, success, error);// Récupère le patient qui a pour identifiant 65.
 
 
-##### exemple avec un *readAll*
+### exemple avec un *readAll*
 
 
 **options** correspond à des paramètres facultatifs.
@@ -85,7 +85,7 @@ On utilise la notation pointée pour appeler un objet qui correspond à un nom d
     client.CCAM.readAll(options, success, error);
 
 
-##### exemple avec un *update*
+### exemple avec un *update*
 
 
     var id = 65;  
