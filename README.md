@@ -1,12 +1,27 @@
 # rhapi-client
 Client RHAPI Node.js
 
-###### Manuel de la version alpha 0.4.2
+###### Manuel de la version alpha 0.4.3
 
 ## Installation
 
 
+Au choix, utiliser la méthode 1. ou 2.
+
+
+### 1. Via npm
+
+
 npm install rhapi-client
+
+
+### 2. Version navigateur
+
+
+Un fichier **rhapi-client-browser.js** est également présent dans le dossier du module. Il peut-être appelé dans du code HTML via une balise *<script></script>* :
+
+
+    <script type="text/javascript" src="rhapi-client-browser.js"></script>
 
 
 ## Usage
