@@ -43,7 +43,7 @@ Pour plus d'informations, il conviendra donc de se référer à la documentation
     }  
     function error(datas, response) {  
         console.log(datas); // toutes les données  
-        console.log(datas.httpError);//  le code erreur 
+        console.log(datas.httpError); // le code erreur 
         console.log(datas.internalMessage); // notice sur l'erreur.  
         // etc  
     }
