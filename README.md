@@ -25,7 +25,7 @@ On utilise la notation pointée pour appeler un groupe (CCAM, Patients...) puis 
 
 Les groupes, méthodes et paramètres utilisés par **rhapi-client** reprennent exactement les mêmes fonctionnalités et la même terminologie que l'API.
 
-Il conviendra donc de se référer à la documentation **RHAPI** https://demo.rhapi.net/apido01/.
+Il conviendra donc de se référer à la documentation **RHAPI** https://demo.rhapi.net/apidoc01/.
 
 ### exemple 1 : création d'une fiche patient
 
