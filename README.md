@@ -23,9 +23,9 @@ Alternativement **rhapi-client-browser.js** (généré par browserify) est fourn
 
 On utilise la notation pointée pour appeler un groupe (CCAM, Patients...) puis une méthode (create, read, readAll...).
 
-Les groupes, méthodes et paramètres utilisés par **rhapi-client** reprennent exactement les mêmes fonctionnalités et la même terminologie que l'API.
+Les groupes, méthodes et paramètres utilisés par **rhapi-client** reprennent exactement les mêmes fonctionnalités et la même terminologie que l'API REST.
 
-Il conviendra donc de se référer à la documentation **RHAPI** https://demo.rhapi.net/apidoc01/.
+Pour plus d'informations, il conviendra donc de se référer à la documentation **RHAPI** : https://demo.rhapi.net/apidoc01/.
 
 ### exemple 1 : création d'une fiche patient
 
