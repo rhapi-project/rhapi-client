@@ -1,5 +1,8 @@
 # rhapi-client
-Client RHAPI JavaScript
+
+Un client RHAPI JavaScript
+
+*RHAPI is a RESTful Health API*
 
 ## Installation
 
@@ -9,7 +12,6 @@ Alternativement **rhapi-client-browser.js** (généré par browserify) est fourn
 
     <script type="text/javascript" src="rhapi-client-browser.js"></script>
 
-
 ## Usage
 
 ### Instancier un *client*
@@ -17,17 +19,15 @@ Alternativement **rhapi-client-browser.js** (généré par browserify) est fourn
     var module = require("rhapi-client");
     var client = new module.Client("https://demo.rhapi.net/demo01");
 
-
 ### Appeler une méthode
 
 On utilise la notation pointée pour appeler un groupe (CCAM, Patients...) puis une méthode (create, read, readAll...).
 
-Les groupes, méthodes et paramètres utilisés par **rhapi-client.js** reprennent exactement les mêmes fonctionnalités et la même terminologie que [RHAPI et sa documentation] (https://demo.rhapi.net/apido01/) auquel il convient de se référer.
+Les groupes, méthodes et paramètres utilisés par **rhapi-client** reprennent exactement les mêmes fonctionnalités et la même terminologie que l'API.
 
-
+Il conviendra donc de se référer à la documentation **RHAPI** https://demo.rhapi.net/apido01/.
 
 ### exemple 1 : création d'une fiche patient
-
 
     var args = {  
         nom: "Dupont",  
