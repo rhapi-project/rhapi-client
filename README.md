@@ -20,8 +20,10 @@ Alternativement **rhapi-client-browser.js** (généré par browserify) est fourn
 
 ### Appeler une méthode
 
-
 On utilise la notation pointée pour appeler un groupe (CCAM, Patients...) puis une méthode (create, read, readAll...).
+
+Les groupes, méthodes et paramètres utilisés par **rhapi-client.js** reprennent exactement les mêmes fonctionnalités et la même terminologie que [RHAPI et sa documentation] (https://demo.rhapi.net/apido01/) auquel il convient de se référer.
+
 
 
 ### exemple 1 : création d'une fiche patient
@@ -31,11 +33,7 @@ On utilise la notation pointée pour appeler un groupe (CCAM, Patients...) puis 
         nom: "Dupont",  
         prenom: "Martin"  
     };  
-    client.Patients.create(args, success, error);// Va créer le patient
-
-
-**success** et **error** sont des méthodes *callback* que vous définissez dans votre code et qui recoivent en paramètres 2 objets qui contiennent les résultats de la requête. Exemple :
-
+    client.Patients.create(args, success, error);
 
     function success(datas, response) {  
         console.log(datas);// Affiche toutes les données  
@@ -59,20 +57,18 @@ On utilise la notation pointée pour appeler un groupe (CCAM, Patients...) puis 
     };  
     client.Patients.read(search, options, success, error);
 
-
-### exemple 3 : recherche des actes CCAM comportant le terme *biopsie*
-
-    var options = {  
-        texte: "biopsie"  
-    };
-    client.CCAM.readAll(options, success, error);
-
-
-### exemple 4 : modification d'une fiche patient
+### exemple 3 : modification d'une fiche patient
 
     var id = 65;  
     var options = {  
         ville: "Paris"  
     };  
     client.Patients.update(id, options, success, error);
-    
+
+
+### exemple 4 : recherche des actes CCAM comportant le terme *biopsie*
+
+    var options = {  
+        texte: "biopsie"  
+    };
+    client.CCAM.readAll(options, success, error);
