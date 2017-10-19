@@ -36,15 +36,15 @@ Pour plus d'informations, il conviendra donc de se référer à la documentation
     client.Patients.create(args, success, error);
 
     function success(datas, response) {  
-        console.log(datas);// Affiche toutes les données  
-        console.log(datas.nom);// Affiche "Dupont"  
-        console.log(datas.prenom);// Affiche "Martin"  
+        console.log(datas); // toutes les données  
+        console.log(datas.nom); // "Dupont"  
+        console.log(datas.prenom); // "Martin"  
         // etc  
     }  
     function error(datas, response) {  
-        console.log(datas);// Affiche toutes les données  
-        console.log(datas.httpError);// Affiche le code de l'erreur HTTP  
-        console.log(datas.internalMessage);// Affiche une notice sur l'erreur.  
+        console.log(datas); // toutes les données  
+        console.log(datas.httpError);//  le code erreur 
+        console.log(datas.internalMessage); // notice sur l'erreur.  
         // etc  
     }
 
