@@ -1,25 +1,11 @@
 # rhapi-client
-Client RHAPI Node.js
-
-###### Manuel de la version alpha 0.4.3
+Client RHAPI JavaScript
 
 ## Installation
 
+    npm install rhapi-client
 
-Au choix, utiliser la méthode 1. ou 2.
-
-
-### 1. Via npm
-
-
-npm install rhapi-client
-
-
-### 2. Version navigateur
-
-
-Un fichier **rhapi-client-browser.js** est également présent dans le dossier du module. Il peut-être appelé dans du code HTML via une balise *<script></script>* :
-
+Alternativement **rhapi-client-browser.js** (généré par browserify) est fourni pour être inséré directement dans une page html
 
     <script type="text/javascript" src="rhapi-client-browser.js"></script>
 
@@ -28,26 +14,17 @@ Un fichier **rhapi-client-browser.js** est également présent dans le dossier d
 
 ### Instancier un *client*
 
-
     var module = require("rhapi-client");
-
-
-Quand ou un objet **client** est instancié, il reçoit comme argument l'adresse d'un serveur RHAPI. Ex :
-
-
     var client = new module.Client("https://demo.rhapi.net/demo01");
 
 
 ### Appeler une méthode
 
 
-On utilise la notation pointée pour appeler un objet qui correspond à un nom du groupe (CCAM, Patients...) puis une méthode pour le type de requête (create, read, readAll...).
+On utilise la notation pointée pour appeler un groupe (CCAM, Patients...) puis une méthode (create, read, readAll...).
 
 
-### exemple avec un *create*
-
-
-**args** contient les données du patient qui va être créé. Il est possible de renseigner maintenant toutes les données ou seulement certaines. Une méthode **update** sera toujours possible plus tard pour mettre à jour le patient.
+### exemple 1 : création d'une fiche patient
 
 
     var args = {  
@@ -74,37 +51,28 @@ On utilise la notation pointée pour appeler un objet qui correspond à un nom d
     }
 
 
-### exemple avec un *read*
-
-
-**search** correspond à un identifiant ou un code d'acte.  
-**options** correspond à des paramètres facultatifs quand on appelle un *read*.
-
+### exemple 2 : recherche du patient d'identifiant unique 65
 
     var search = 65;  
     var options = {  
-        modifiedSince: 2  
+        // voir documentation RHAPI
     };  
-    client.Patients.read(search, options, success, error);// Récupère le patient qui a pour identifiant 65.
+    client.Patients.read(search, options, success, error);
 
 
-### exemple avec un *readAll*
-
-
-**options** correspond à des paramètres facultatifs.
-
+### exemple 3 : recherche des actes CCAM comportant le terme *biopsie*
 
     var options = {  
-        texte: "bio"  
-    };  
+        texte: "biopsie"  
+    };
     client.CCAM.readAll(options, success, error);
 
 
-### exemple avec un *update*
-
+### exemple 4 : modification d'une fiche patient
 
     var id = 65;  
     var options = {  
         ville: "Paris"  
     };  
-    client.Patients.update(id, options, success, error);// Va mettre à jour la ville du patient ayant pour identifiant 65.
+    client.Patients.update(id, options, success, error);
+    
