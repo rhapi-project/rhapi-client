@@ -1,7 +1,8 @@
 class Client {
     constructor (baseUrl) {
-        var THIS = this;
+        const THIS = this;
         this.baseUrl = baseUrl;
+        
         this.Administration = {
             read : function (search, reponse, error) {
                 var url = THIS.baseUrl + "/Administration/" + search;
@@ -139,7 +140,7 @@ class Client {
             }
         }
         
-        this.client = new NodeRestClient();
+        this.client = new NodeRestClient(null, null);
     }
     
     clientGet () {
@@ -182,13 +183,9 @@ class Client {
 }
 
 class NodeRestClient {
-    constructor () {
+    constructor (login, pass) {
         var Client = require("node-rest-client").Client;
         this.client = new Client();
-        this.datasError = {
-            httpError: null,
-            internalMessage: "Problème de connexion réseau entre le client et le serveur. Êtes-vous bien connecté à internet ?"
-        }
     }
     
     clientGet () {
@@ -200,67 +197,55 @@ class NodeRestClient {
     }
     
     get (url, params, success, error) {
-        var THIS = this;
         var args = {
             parameters: params
         };
         this.client.get(url, args, function(datas, response){
-            if (typeof response.statusCode !== "undefined" && response.statusCode === 200) {
+            if (response.statusCode === 200) {
                 success(datas, response);
             } else {
                 error(datas, response);
             }
-        }).on("error", function (reponseError) {
-            error(THIS.datasError, reponseError);
         });
     }
     
     post (url, params, success, error) {
-        var THIS = this;
         var args = {
             data: params,
             headers: {"Content-Type": "application/json"}
         }
         this.client.post(url, args, function(datas, response){
-            if (typeof response.statusCode !== "undefined" && response.statusCode === 200) {
+            if (response.statusCode === 200) {
                 success(datas, response);
             } else {
                 error(datas, response);
             }
-        }).on("error", function (reponseError) {
-            error(THIS.datasError, reponseError);
         });
     }
     
     put (url, params, success, error) {
-        var THIS = this;
         var args = {
             data: params,
             headers: {"Content-Type": "application/json"}
-            // cors
+            // TODO cors ?
         }
         this.client.put(url, args, function(datas, response){
-            if (typeof response.statusCode !== "undefined" && response.statusCode === 200) {
+            if (response.statusCode === 200) {
                 success(datas, response);
             } else {
                 error(datas, response);
             }
-        }).on("error", function (reponseError) {
-            error(THIS.datasError, reponseError);
-        });;
+        });
     }
     
     destroy (url, success, error) {
-        var THIS = this;
         this.client.delete(url, {}, function(datas, response){
-            if (typeof response.statusCode !== "undefined" && response.statusCode === 200) {
+            if (response.statusCode === 200) {
                 success(datas, response);
             } else {
                 error(datas, response);
             }
-        }).on("error", function (reponseError) {
-            error(THIS.datasError, reponseError);
-        });;
+        });
     }
 }
 
