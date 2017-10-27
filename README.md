@@ -14,10 +14,30 @@ Alternativement **rhapi-client-browser.js** (généré par browserify) est fourn
 
 ## Usage
 
-### Instancier un *client*
+### Instancier un client sans authentification (tests et démos)
 
-    var module = require("rhapi-client");
-    var client = new module.Client("https://demo.rhapi.net/demo01");
+    var Client = require("rhapi-client").Client;
+    var client = new Client("https://demo.rhapi.net/demo01");
+    // les groupes/méthodes RHAPI sont accessibles ici
+    
+### Instancier un client avec authentification (production)
+
+    var Client = require("rhapi-client").Client;
+    var client = new Client();
+    client.authorize(
+        //   auth url                     app token            username    password
+        "https://auth-dev.rhapi.net", "VGVzdEFwcDpUZXN0QXBw", "TestUser", "TestUser",
+        function() { // success
+            // auth ok
+            // les groupes/méthodes RHAPI sont accessibles ici
+        },
+        function(datas, response) {
+            console.log(datas); // erreur d'authentification
+            console.log(response);
+            // erreur username/password ?
+            // essayer à nouveau ?
+        }
+    );
 
 ### Appeler une méthode
 
