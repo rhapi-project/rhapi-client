@@ -1,17 +1,15 @@
 class Client {
-    
+
     constructor (baseUrl) {
         this.baseUrl = baseUrl;
         var self = this;
-        
-        this.client = new NodeRestClient();
         
         this.Administration = {
             read : function (search, success, error) {
                 var url = self.baseUrl + "/Administration/" + search;
                 self.get(url, {}, success, error);
             }
-        }
+        };
         
         this.CCAM = {
             read : function (search, params, success, error) {
@@ -33,7 +31,7 @@ class Client {
                 var url = self.baseUrl + "/CCAM/" + search + "/tarif";
                 self.get(url, params, success, error);
             }
-        }
+        };
         
         this.Correspondants = {
             create : function (params, success, error) {
@@ -64,7 +62,7 @@ class Client {
                 var url = self.baseUrl + "/Correspondants/completion";
                 self.get(url, params, success, error);
             }
-        }
+        };
         
         this.Images = {
             create : function (params, success, error) {
@@ -95,7 +93,7 @@ class Client {
                 var url = self.baseUrl + "/Images/" + search + "/dupliquer";
                 self.post(url, {}, success, error);
             }
-        }
+        };
         
         this.MonCompte = {
             read : function (success, error) {
@@ -141,7 +139,7 @@ class Client {
                 var url = self.baseUrl + "/Patients/completion";
                 self.get(url, params, success, error);
             }
-        }
+        };
 
         this.Plannings = {
             create : function (params, success, error) {
@@ -172,7 +170,7 @@ class Client {
                 var url = self.baseUrl + "/Plannings/actualiser";
                 self.get(url, params, success, error);
             }
-        }
+        };
         
         this.RendezVous = {
             create : function (params, success, error) {
@@ -203,8 +201,33 @@ class Client {
                 var url = self.baseUrl + "/RendezVous/actualiser";
                 self.get(url, params, success, error);
             }
-        }
+        };
 
+    } // constructor ends
+    
+    authorize (authUrl, appToken, user, password, success, error) {
+        this.auth = new Auth(authUrl, appToken, user, password);
+        this.authRenew(success, error);
+    }
+    
+    authRenew(success, error) {
+        var self = this;
+        this.auth.renew(
+            function(url, token, expiresIn) {
+                self.baseUrl = url;
+                self.client = new NodeRestClient(token);
+                success();
+                setTimeout(
+                    function() {
+                        self.authRenew(function(){}, error);
+                    }
+                    , Math.round(expiresIn * 0.9) // - 10%
+                );
+            },
+            function (datas, response) {
+                error(datas, response);
+            }
+        );
     }
         
     get (url, params, success, error) {
@@ -224,16 +247,27 @@ class Client {
     }
 }
 
+
+// Sur TestApp on aura : (après récupération login/password de TestUser)
+// curl -H "Authorization:Bearer VGVzdEFwcDpUZXN0QXBw" "https://auth-dev.rhapi.net/?user=TestUser&password=TestUser"
+
 class NodeRestClient {
     
-    constructor () {
+    constructor (token) {
         var Client = require("node-rest-client").Client;
         this.client = new Client();
+        this.headers = {};
+        if (typeof token === "string" && token !== '') {
+            this.headers = {
+                "Authorization": "Bearer " + token
+            }
+        }
     }
     
     get (url, params, success, error) {
         var args = {
-            parameters: params
+            parameters: params,
+            headers: this.headers
         };
         this.client.get(url, args, function(datas, response) {
             if (response.statusCode === 200) {
@@ -246,10 +280,11 @@ class NodeRestClient {
     }
     
     post (url, params, success, error) {
+        var headers = Object.assign(this.headers, {"Content-Type": "application/json"});
         var args = {
             data: params,
-            headers: {"Content-Type": "application/json"}
-        }
+            headers: headers
+        };
         this.client.post(url, args, function(datas, response) {
             if (response.statusCode === 200) {
                 success(datas, response);
@@ -261,10 +296,15 @@ class NodeRestClient {
     }
     
     put (url, params, success, error) {
+        var headers = Object.assign(this.headers, {"Content-Type": "application/json"});
         var args = {
             data: params,
-            headers: {"Content-Type": "application/json"}
-        }
+            headers: headers
+        };
+        var args = {
+            data: params,
+            headers: headers
+        };
         this.client.put(url, args, function(datas, response) {
             if (response.statusCode === 200) {
                 success(datas, response);
@@ -276,7 +316,10 @@ class NodeRestClient {
     }
     
     destroy (url, success, error) {
-        this.client.delete(url, {}, function(datas, response) {
+        var args = {
+            headers: this.headers
+        };
+        this.client.delete(url, args, function(datas, response) {
             if (response.statusCode === 200) {
                 success(datas, response);
             } 
@@ -284,6 +327,40 @@ class NodeRestClient {
                 error(datas, response);
             }
         });
+    }
+}
+
+class Auth {
+    
+    constructor (authUrl, appToken, user, password) {
+        var Client = require("node-rest-client").Client;
+        this.client = new Client();
+        this.args = {
+            headers: {
+                "Authorization": "Bearer " + appToken
+            },
+            parameters: {
+                user: user,
+                password: password
+            }
+        };
+        this.authUrl = authUrl;
+    }
+    
+    renew (success, error) {
+        this.client.get(
+            this.authUrl, this.args, 
+            function(datas, response) {
+                if (response.statusCode === 200) {
+                    console.log(datas);
+                    console.log(response);
+                    success(datas.url, datas.token, datas.expiresIn); // app url, user token, délai d'expiration
+                } 
+                else {
+                    error(datas, response);
+                }
+            }
+        );
     }
 }
 
