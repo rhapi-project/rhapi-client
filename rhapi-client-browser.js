@@ -22942,13 +22942,13 @@ class Client {
             function(url, token, expiresIn) {
                 self.baseUrl = url;
                 self.client = new NodeRestClient(token);
-                success();
                 setTimeout(
                     function() {
                         self.authRenew(function(){}, error);
                     }
                     , Math.round(expiresIn * 0.9) // - 10%
                 );
+                success();
             },
             function (datas, response) {
                 error(datas, response);
@@ -22972,10 +22972,6 @@ class Client {
         this.client.destroy(url, success, error);
     }
 }
-
-
-// Sur TestApp on aura : (après récupération login/password de TestUser)
-// curl -H "Authorization:Bearer VGVzdEFwcDpUZXN0QXBw" "https://auth-dev.rhapi.net/?user=TestUser&password=TestUser"
 
 class NodeRestClient {
     

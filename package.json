@@ -1,16 +1,16 @@
 {
+  "bugs": {
+    "url": "https://github.com/rhapi-project/rhapi-client/issues"
+  },
   "dependencies": {
     "node-rest-client": "^3.1.0"
   },
   "description": "Un client RHAPI JavaScript",
   "devDependencies": {},
   "directories": {},
-  "main": "rhapi-client.js",
   "homepage": "https://github.com/rhapi-project/rhapi-client",
-    "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rhapi-project/rhapi-client.git"
-  },
+  "license": "MIT",
+  "main": "rhapi-client.js",
   "maintainers": [
     {
       "name": "lambdasoft",
@@ -18,8 +18,12 @@
     }
   ],
   "name": "rhapi-client",
-  "license": "MIT",
   "optionalDependencies": {},
   "readme": "ERROR: No README data found!",
-  "version": "0.4.7"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhapi-project/rhapi-client.git"
+  },
+  "scripts": {},
+  "version": "0.4.9"
 }
