@@ -19,11 +19,11 @@
   ],
   "name": "rhapi-client",
   "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
+  "readme": "",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rhapi-project/rhapi-client.git"
   },
   "scripts": {},
-  "version": "0.4.9"
+  "version": "0.5.0"
 }

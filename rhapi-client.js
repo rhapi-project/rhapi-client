@@ -11,6 +11,23 @@ class Client {
             }
         };
         
+        this.Configuration = {
+            read : function (search, success, error) {
+                var url = self.baseUrl + "/Configuration/" + search;
+                self.get(url, {}, success, error);
+            },
+            
+            update : function (search, params, success, error) {
+                var url = self.baseUrl + "/Configuration/" + search;
+                self.put(url, params, success, error);
+            },
+            
+            destroy : function (search, success, error) {
+                var url = self.baseUrl + "/Configuration/" + search;
+                self.destroy(url, success, error);
+            }
+        };
+        
         this.CCAM = {
             read : function (search, params, success, error) {
                 var url = self.baseUrl + "/CCAM/" + search;
@@ -213,14 +230,14 @@ class Client {
     authRenew(success, error) {
         var self = this;
         this.auth.renew(
-            function(url, token, expiresIn) {
+            function(url, token, expiredIn) {
                 self.baseUrl = url;
                 self.client = new NodeRestClient(token);
                 setTimeout(
                     function() {
                         self.authRenew(function(){}, error);
                     }
-                    , Math.round(expiresIn * 0.9) // - 10%
+                    , Math.round(expiredIn * 0.9) // - 10%
                 );
                 success();
             },
@@ -348,9 +365,7 @@ class Auth {
             this.authUrl, this.args, 
             function(datas, response) {
                 if (response.statusCode === 200) {
-                    console.log(datas);
-                    console.log(response);
-                    success(datas.url, datas.token, datas.expiresIn); // app url, user token, délai d'expiration
+                    success(datas.url, datas.token, datas.expiredIn);
                 } 
                 else {
                     error(datas, response);
