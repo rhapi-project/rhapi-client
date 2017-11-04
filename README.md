@@ -56,16 +56,16 @@ La fonction **addForm(form, groupe)** permet de définir simplement tous les att
 
 La fonction **addForm(form, groupe)** permet le cas échéant, une mise à jour dynamique de l'URL dans le cadre d'une utilisation avec **authorize()** .
 
-Par exemple avec *client.addForm(document.getElementById("form"), "Images")*
+Par exemple avec **client.addForm(document.getElementById("form-test"), "Images")**
 
-Avant addForm
+Si avant l'appel addForm on a
 
     <form id="form-test"> 
         <input type="file"/>
         <input type="submit">
     </form>
 
-Après addForm on obtient quelque chose comme
+Après addForm on obtientra quelque chose comme
 
      <form id="form-test" action="https://localhost/Images" method="post" enctype="multipart/form-data"> 
         <input name="image" type="file"/>
