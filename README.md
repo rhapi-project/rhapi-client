@@ -58,19 +58,21 @@ La fonction **addForm(form, groupe)** permet le cas échéant, une mise à jour 
 
 Par exemple avec *client.addForm(document.getElementById("form"), "Images")*
 
-Avant addForm :
+Avant addForm
+
     <form id="form-test"> 
         <input type="file"/>
         <input type="submit">
     </form>
 
-Après addForm on obtient quelque chose comme :
+Après addForm on obtient quelque chose comme
+
      <form id="form-test" action="http://localhost/Images" method="post" enctype="multipart/form-data"> 
         <input name="image" type="file"/>
         <input type="submit">
      </form>
      
-Voici un exemple minimaliste mais fonctionnel d'utilisation d'un formulaire avec les images :
+Voici un exemple minimaliste mais fonctionnel d'utilisation d'un formulaire avec les images
 
     <!-- 
         form-exemple.html
