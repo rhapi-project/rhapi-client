@@ -39,6 +39,7 @@ Alternativement **rhapi-client-browser.js** (généré par browserify) est fourn
         }
     );
 
+
 ### Appeler une méthode
 
 On utilise la notation pointée pour appeler un groupe (CCAM, Patients...) puis une méthode (create, read, readAll...).
@@ -46,6 +47,105 @@ On utilise la notation pointée pour appeler un groupe (CCAM, Patients...) puis 
 Les groupes, méthodes et paramètres utilisés par **rhapi-client** reprennent exactement les mêmes fonctionnalités et la même terminologie que l'API REST.
 
 Pour plus d'informations, il conviendra donc de se référer à la documentation **RHAPI** : https://demo.rhapi.net/apidoc01/.
+
+### Instancier un formulaire d'envoi de fichier
+
+La fonction **addForm(form, groupe)** permet d'instancier un formulaire HTML.
+
+La fonction **addForm(form, groupe)** permet de définir simplement tous les attributs nécessaires au bon fonctionnement du formulaire d'envoi de fichier.
+
+La fonction **addForm(form, groupe)** permet le cas échéant, une mise à jour dynamique de l'URL dans le cadre d'une utilisation avec **authorize()** .
+
+Par exemple avec *client.addForm(document.getElementById("form"), "Images")*
+
+Avant addForm :
+    <form id="form-test"> 
+        <input type="file"/>
+        <input type="submit">
+    </form>
+
+Après addForm on obtient quelque chose comme :
+     <form id="form-test" action="http://localhost/Images" method="post" enctype="multipart/form-data"> 
+        <input name="image" type="file"/>
+        <input type="submit">
+     </form>
+     
+Voici un exemple minimaliste mais fonctionnel d'utilisation d'un formulaire avec les images :
+
+    <!-- 
+        form-exemple.html
+    -->
+    <html>
+    <head>
+        <title>Images RHAPI - Formulaire d'envoi</title>
+        <style>
+            body {
+                margin: 20px;
+                font-family: Helvetica,Arial;
+                font-size: 24;
+            }
+            label {
+                color: #404040;
+            }
+            td {
+                padding: 10px;
+                background: #e0e0e0;
+            }
+        </style>
+        <script src="node_modules/rhapi-client/rhapi-client-browser.js"></script>
+    </head>
+    <body>
+        <!-- utilisation d'un iframe masqué comme cible du formulaire -->
+        <iframe name="result-frame" srcdoc="" onload="refresh(false);" style="display: none">
+        </iframe>
+        <form id="form-image" target="result-frame">
+            <input type="file"><br>
+            <label>L'identifiant du praticien est fixé à 500</label>
+            <input name="idPraticien" type="hidden" value=500><br>
+            <label>Choisissez l'identifiant du patient : </label>
+            <input name="idPatient" type="Number" min=1 max=1000 value=1><br>
+            <input type="submit" value="Valider l'enregistrement de l'image">
+        </form>
+        <input type="button" value="Effacer toutes les images" onclick="refresh(true)">
+        <table id="list"></table>
+        <script type="text/javascript">
+            var Client = require("rhapi-client").Client;
+            var client = new Client("http://localhost");
+            var form = document.getElementById("form-image");
+            client.addForm(form, "Images");
+            function refresh(removeAll) {
+                client.Images.readAll(
+                    {
+                        _idPraticien: 500,
+                        limit: 1000,
+                        sort: "idPatient"
+                    },
+                    function(datas, response) {
+                        var l = datas.results.length;
+                        var list = "<th>Id Patient</th><th>Nom du fichier</th><th>Image</th>";
+                        for (var i = 0; i < l; i++) {
+                            var image = datas.results[i];
+                            if (removeAll) {
+                                client.Images.destroy(image.id, function() {}, function() {});
+                            }
+                            else {
+                                list += "<tr><td>" + image.idPatient + 
+                                        "</td><td>" + image.fileName + 
+                                        "</td><td><image src='" + image.image + "'>";
+                            }
+                        }
+                        document.getElementById("list").innerHTML = list;
+                    },
+                    function(datas, response) {
+                        console.log("error");
+                        console.log(datas);
+                    }
+                );
+            }
+        </script>
+    </body>
+    </html>
+
 
 ### exemple 1 : création d'une fiche patient
 
@@ -92,3 +192,5 @@ Pour plus d'informations, il conviendra donc de se référer à la documentation
         texte: "biopsie"  
     };
     client.CCAM.readAll(options, success, error);
+    
+
