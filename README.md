@@ -112,7 +112,7 @@ Voici un exemple minimaliste mais fonctionnel d'utilisation d'un formulaire avec
         <table id="list"></table>
         <script type="text/javascript">
             var Client = require("rhapi-client").Client;
-            var client = new Client("http://demo.rhapi.net/demo01");
+            var client = new Client("https://demo.rhapi.net/demo01");
             var form = document.getElementById("form-image");
             client.addForm(form, "Images");
             function refresh(removeAll) {
