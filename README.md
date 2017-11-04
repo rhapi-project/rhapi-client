@@ -92,7 +92,7 @@ Voici un exemple minimaliste mais fonctionnel d'utilisation d'un formulaire avec
                 background: #e0e0e0;
             }
         </style>
-        <script src="node_modules/rhapi-client/rhapi-client-browser.js"></script>
+        <script src="rhapi-client-browser.js"></script>
     </head>
     <body>
         <!-- utilisation d'un iframe masqué comme cible du formulaire -->
@@ -110,7 +110,7 @@ Voici un exemple minimaliste mais fonctionnel d'utilisation d'un formulaire avec
         <table id="list"></table>
         <script type="text/javascript">
             var Client = require("rhapi-client").Client;
-            var client = new Client("http://localhost");
+            var client = new Client("http://demo.rhapi.net/demo01");
             var form = document.getElementById("form-image");
             client.addForm(form, "Images");
             function refresh(removeAll) {
@@ -147,7 +147,7 @@ Voici un exemple minimaliste mais fonctionnel d'utilisation d'un formulaire avec
     </html>
 
 
-### exemple 1 : création d'une fiche patient
+### Autre exemple (1) : création d'une fiche patient
 
     var args = {  
         nom: "Dupont",  
@@ -169,7 +169,7 @@ Voici un exemple minimaliste mais fonctionnel d'utilisation d'un formulaire avec
     }
 
 
-### exemple 2 : recherche du patient d'identifiant unique 65
+### Autre exemple (2) : recherche du patient d'identifiant unique 65
 
     var search = 65;  
     var options = {  
@@ -177,7 +177,7 @@ Voici un exemple minimaliste mais fonctionnel d'utilisation d'un formulaire avec
     };  
     client.Patients.read(search, options, success, error);
 
-### exemple 3 : modification d'une fiche patient
+### Autre exemple (3) : modification d'une fiche patient
 
     var id = 65;  
     var options = {  
@@ -186,7 +186,7 @@ Voici un exemple minimaliste mais fonctionnel d'utilisation d'un formulaire avec
     client.Patients.update(id, options, success, error);
 
 
-### exemple 4 : recherche des actes CCAM comportant le terme *biopsie*
+### Autre exemple (4) : recherche des actes CCAM comportant le terme *biopsie*
 
     var options = {  
         texte: "biopsie"  
