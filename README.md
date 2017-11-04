@@ -67,7 +67,7 @@ Avant addForm
 
 Après addForm on obtient quelque chose comme
 
-     <form id="form-test" action="http://localhost/Images" method="post" enctype="multipart/form-data"> 
+     <form id="form-test" action="https://localhost/Images" method="post" enctype="multipart/form-data"> 
         <input name="image" type="file"/>
         <input type="submit">
      </form>
