@@ -8,10 +8,6 @@
   "description": "Un client RHAPI JavaScript",
   "devDependencies": {},
   "directories": {},
-  "dist": {
-    "shasum": "e249fc2fc45e8d93f8c34bd1ea0ca62242254941",
-    "tarball": "https://registry.npmjs.org/rhapi-client/-/rhapi-client-1.0.0.tgz"
-  },
   "homepage": "https://github.com/rhapi-project/rhapi-client",
   "license": "MIT",
   "main": "rhapi-client.js",
@@ -29,5 +25,5 @@
     "url": "git+https://github.com/rhapi-project/rhapi-client.git"
   },
   "scripts": {},
-  "version": "1.0.0"
+  "version": "1.0.1"
 }

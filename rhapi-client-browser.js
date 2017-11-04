@@ -22727,7 +22727,14 @@ function extend() {
 class Client {
 
     constructor (baseUrl) {
-        this.baseUrl = baseUrl;
+        
+        if (typeof baseUrl === "string" && baseUrl !== "") {
+            this.baseUrl = baseUrl;
+            this.client = new NodeRestClient();
+        }
+        
+        this.forms = [];
+        
         var self = this;
         
         this.Administration = {
@@ -22819,7 +22826,7 @@ class Client {
             
             readAll : function (params, success, error) {
                 var url = self.baseUrl + "/Images";
-                self.get(url, success, error);
+                self.get(url, params, success, error);
             },
             
             update : function (search, params, success, error) {
@@ -22957,7 +22964,10 @@ class Client {
         var self = this;
         this.auth.renew(
             function(url, token, expiredIn) {
-                self.baseUrl = url;
+                if (url !== self.baseUrl) {
+                    self.baseUrl = url;
+                    self.updateForms();
+                }
                 self.client = new NodeRestClient(token);
                 setTimeout(
                     function() {
@@ -22971,6 +22981,34 @@ class Client {
                 error(datas, response);
             }
         );
+    }
+    
+    addForm(form, group) {
+        form.setAttribute("action", this.baseUrl + "/" + group);
+        form.setAttribute("rhapi-group", group); // pour màj dynamique avec nouveaux token/url => voir updateForms()
+        form.setAttribute("method", "post");
+        form.setAttribute("enctype", "multipart/form-data");
+        var name = group.toLowerCase().slice(0, -1); // Images -> image / Documents -> document
+        var inputs = form.getElementsByTagName("input");
+        for (var i = 0; i < inputs.length; i++) { 
+            var input = inputs[i];
+            if (input.getAttribute("type") === "file") {
+                input.setAttribute("name", name);
+            }
+        }
+        this.forms.push(form);
+    }
+    
+    updateForms() {
+        var forms2 = [];
+        for (var i = 0; i < this.forms.length; i++) {
+            var form = this.forms[i];
+            if (document.body.contains(form)) {
+                form.setAttribute("action", this.baseUrl + "/" + form.getAttribute("rhapi-group"));
+                forms2.push(form);
+            }
+        }
+        this.forms = forms2;
     }
         
     get (url, params, success, error) {
@@ -22996,7 +23034,7 @@ class NodeRestClient {
         var Client = require("node-rest-client").Client;
         this.client = new Client();
         this.headers = {};
-        if (typeof token === "string" && token !== '') {
+        if (typeof token === "string" && token !== "") {
             this.headers = {
                 "Authorization": "Bearer " + token
             }
@@ -23019,7 +23057,7 @@ class NodeRestClient {
     }
     
     post (url, params, success, error) {
-        var headers = Object.assign(this.headers, {"Content-Type": "application/json"});
+        var headers = Object.assign({"Content-Type": "application/json"}, this.headers);
         var args = {
             data: params,
             headers: headers
@@ -23035,7 +23073,7 @@ class NodeRestClient {
     }
     
     put (url, params, success, error) {
-        var headers = Object.assign(this.headers, {"Content-Type": "application/json"});
+        var headers = Object.assign({"Content-Type": "application/json"}, this.headers);
         var args = {
             data: params,
             headers: headers
