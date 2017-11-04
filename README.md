@@ -72,7 +72,7 @@ Après addForm on obtiendra quelque chose comme
         <input type="submit">
      </form>
      
-Voici un exemple minimaliste mais fonctionnel d'utilisation d'un formulaire d'envoi d'images
+Voici un l'exemple minimaliste mais fonctionnel d'un formulaire d'envoi d'images
 
     <!-- 
         form-exemple.html
