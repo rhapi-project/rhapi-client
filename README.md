@@ -65,14 +65,14 @@ Si avant l'appel addForm on a
         <input type="submit">
     </form>
 
-Après addForm on obtientra quelque chose comme
+Après addForm on obtiendra quelque chose comme
 
-     <form id="form-test" action="https://localhost/Images" method="post" enctype="multipart/form-data"> 
+     <form id="form-test" action="https://demo.rhapi.net/demo01/Images" method="post" enctype="multipart/form-data"> 
         <input name="image" type="file"/>
         <input type="submit">
      </form>
      
-Voici un exemple minimaliste mais fonctionnel d'utilisation d'un formulaire avec les images
+Voici un exemple minimaliste mais fonctionnel d'utilisation d'un formulaire d'envoi d'images
 
     <!-- 
         form-exemple.html
