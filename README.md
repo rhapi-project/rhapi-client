@@ -79,6 +79,7 @@ Voici un l'exemple minimaliste mais fonctionnel d'un formulaire d'envoi d'images
     -->
     <html>
     <head>
+         <meta charset="UTF-8"> 
         <title>Images RHAPI - Formulaire d'envoi</title>
         <style>
             body {
