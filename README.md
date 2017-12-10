@@ -19,6 +19,12 @@ Alternativement **rhapi-client-browser.js** (généré par browserify) est fourn
     var Client = require("rhapi-client").Client;
     var client = new Client("https://demo.rhapi.net/demo01");
     // les groupes/méthodes RHAPI sont accessibles ici
+
+### Idem avec import (ES6, Babel)
+
+    import { Client } from 'rhapi-client';
+    var client = new Client("https://demo.rhapi.net/demo01");
+    // les groupes/méthodes RHAPI sont accessibles ici
     
 ### Instancier un client avec authentification (production)
 
@@ -72,7 +78,7 @@ Après addForm on obtiendra quelque chose comme
         <input type="submit">
      </form>
      
-Voici un l'exemple minimaliste mais fonctionnel d'un formulaire d'envoi d'images
+Voici l'exemple minimaliste mais fonctionnel d'un formulaire d'envoi d'images
 
     <!-- 
         form-exemple.html

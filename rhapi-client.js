@@ -51,6 +51,11 @@ class Client {
                 self.get(url, {}, success, error);
             },
             
+            menu : function (search, success, error) {
+                var url = self.baseUrl + "/CCAM/menu/" + search;
+                self.get(url, {}, success, error);
+            },
+            
             tarif : function (search, params, success, error) {
                 var url = self.baseUrl + "/CCAM/" + search + "/tarif";
                 self.get(url, params, success, error);
