@@ -243,7 +243,7 @@ var search = 65;
 var options = {
     // voir documentation RHAPI
 };
-    client.Patients.read(search, options, success, error);
+client.Patients.read(search, options, success, error);
 ```
 
 ### Autre exemple (3) : modification d'une fiche patient
