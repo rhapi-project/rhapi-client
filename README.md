@@ -15,13 +15,15 @@ Alternativement **rhapi-client-browser.js** (généré par browserify) est fourn
 ## Usage
 
 ### Instancier un client sans authentification (tests et démos)
-
+    ```javascript
     var Client = require("rhapi-client").Client;
     var client = new Client("https://demo.rhapi.net/demo01");
     // les groupes/méthodes RHAPI sont accessibles ici
+    ```
 
 ### Idem avec import (ES6, Babel) et gestion globale des erreurs
 
+    ```javascript
     import { Client } from 'rhapi-client';
     var client = new Client(
         "https://demo.rhapi.net/demo01"),
@@ -41,6 +43,7 @@ Alternativement **rhapi-client-browser.js** (généré par browserify) est fourn
             console log(patient);
         }
     );
+    ```
     
 ### Instancier un client avec authentification et gestions (globale et unitaire) des erreurs (production)
 
