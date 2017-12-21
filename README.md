@@ -6,24 +6,29 @@ Un client RHAPI JavaScript
 
 ## Installation
 
-    npm install rhapi-client
+```
+npm install rhapi-client
+```
 
 Alternativement **rhapi-client-browser.js** (généré par browserify) est fourni pour être inséré directement dans une page html
 
+```html
     <script type="text/javascript" src="rhapi-client-browser.js"></script>
+```
 
 ## Usage
 
 ### Instancier un client sans authentification (tests et démos)
 
-````javascript
-var Client = require("rhapi-client").Client;
-var client = new Client("https://demo.rhapi.net/demo01");
-// les groupes/méthodes RHAPI sont accessibles ici
-````
+```javascript
+    var Client = require("rhapi-client").Client;
+    var client = new Client("https://demo.rhapi.net/demo01");
+    // les groupes/méthodes RHAPI sont accessibles ici
+```
 
 ### Idem avec import (ES6, Babel) et gestion globale des erreurs
 
+```javascript
     import { Client } from 'rhapi-client';
     var client = new Client(
         "https://demo.rhapi.net/demo01"),
@@ -43,9 +48,11 @@ var client = new Client("https://demo.rhapi.net/demo01");
             console log(patient);
         }
     );
+```
     
 ### Instancier un client avec authentification et gestions (globale et unitaire) des erreurs (production)
 
+```javascript
     var Client = require("rhapi-client").Client;
     function globalErrorHandler(datas, response) {
         console.log('Erreur (global) : ', datas.networkError); // eq response.statusCode
@@ -70,7 +77,7 @@ var client = new Client("https://demo.rhapi.net/demo01");
                     console log(patient);
                 },
                 // la fonction suivante peut être omise : seule la
-                // fonction globalErrorHandler serait alors appelée
+                // fonction globalErrorHandler sera alors appelée
                 function(datas, response) {
                     // une erreur en lecture patient provoquera un appel
                     // à cette fonction puis un appel à globalErrorHandler
@@ -87,7 +94,7 @@ var client = new Client("https://demo.rhapi.net/demo01");
             // essayer à nouveau ?
         }
     );
-
+```
 
 ### Appeler une méthode
 
@@ -109,20 +116,25 @@ Par exemple avec **client.addForm(document.getElementById("form-test"), "Images"
 
 Si avant l'appel addForm on a
 
+```html
     <form id="form-test"> 
         <input type="file"/>
         <input type="submit">
     </form>
+```
 
 Après addForm on obtiendra quelque chose comme
 
+```html
      <form id="form-test" action="https://demo.rhapi.net/demo01/Images" method="post" enctype="multipart/form-data"> 
         <input name="image" type="file"/>
         <input type="submit">
      </form>
+```
      
 Voici l'exemple minimaliste mais fonctionnel d'un formulaire d'envoi d'images
 
+```html
     <!-- 
         form-exemple.html
     -->
@@ -197,10 +209,11 @@ Voici l'exemple minimaliste mais fonctionnel d'un formulaire d'envoi d'images
         </script>
     </body>
     </html>
-
+```html
 
 ### Autre exemple (1) : création d'une fiche patient
 
+```javascript
     var args = {  
         nom: "Dupont",  
         prenom: "Martin"  
@@ -219,30 +232,34 @@ Voici l'exemple minimaliste mais fonctionnel d'un formulaire d'envoi d'images
         console.log(datas.internalMessage); // notice sur l'erreur.  
         // etc  
     }
-
+```
 
 ### Autre exemple (2) : recherche du patient d'identifiant unique 65
 
+```javascript
     var search = 65;  
     var options = {  
         // voir documentation RHAPI
     };  
     client.Patients.read(search, options, success, error);
+```
 
 ### Autre exemple (3) : modification d'une fiche patient
 
+```javascript
     var id = 65;  
     var options = {  
         ville: "Paris"  
     };  
     client.Patients.update(id, options, success, error);
-
+```
 
 ### Autre exemple (4) : recherche des actes CCAM comportant le terme *biopsie*
 
+```javascript
     var options = {  
         texte: "biopsie"  
     };
     client.CCAM.readAll(options, success, error);
-    
+```
 
