@@ -67,7 +67,7 @@ Alternativement **rhapi-client-browser.js** (généré par browserify) est fourn
                     console.log('Patient 5 :');
                     console log(patient);
                 },
-                // la fonction suivante peut est omise. Seule la
+                // la fonction suivante peut être omise : seule la
                 // fonction globalErrorHandler serait alors appelée
                 function(datas, response) {
                     // une erreur en lecture patient provoquera un appel
