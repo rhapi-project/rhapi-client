@@ -22724,13 +22724,23 @@ function extend() {
 }
 
 },{}],"rhapi-client":[function(require,module,exports){
+
 class Client {
 
-    constructor (baseUrl) {
+    constructor (baseUrl, errorHandle) {
         
-        if (typeof baseUrl === "string" && baseUrl !== "") {
-            this.baseUrl = baseUrl;
-            this.client = new NodeRestClient();
+        if (typeof baseUrl === "function" && typeof errorHandle === "undefined" ) {
+            globalErrorHandle = baseUrl;
+        }
+        else {
+            if (typeof baseUrl === "string" && baseUrl !== "") {
+                this.baseUrl = baseUrl;
+                this.client = new NodeRestClient();
+            }
+            
+            if (typeof errorHandle === "function") {
+                globalErrorHandle = errorHandle;
+            }
         }
         
         this.forms = [];
@@ -22990,10 +23000,12 @@ class Client {
     
     addForm(form, group) {
         form.setAttribute("action", this.baseUrl + "/" + group);
-        form.setAttribute("rhapi-group", group); // pour màj dynamique avec nouveaux token/url => voir updateForms()
+        // pour màj dynamique avec nouveaux token/url => voir updateForms()
+        form.setAttribute("rhapi-group", group);
         form.setAttribute("method", "post");
         form.setAttribute("enctype", "multipart/form-data");
-        var name = group.toLowerCase().slice(0, -1); // Images -> image / Documents -> document
+        // Images -> image / Documents -> document
+        var name = group.toLowerCase().slice(0, -1);
         var inputs = form.getElementsByTagName("input");
         for (var i = 0; i < inputs.length; i++) { 
             var input = inputs[i];
@@ -23009,7 +23021,10 @@ class Client {
         for (var i = 0; i < this.forms.length; i++) {
             var form = this.forms[i];
             if (document.body.contains(form)) {
-                form.setAttribute("action", this.baseUrl + "/" + form.getAttribute("rhapi-group"));
+                form.setAttribute(
+                    "action", 
+                    this.baseUrl + "/" + form.getAttribute("rhapi-group")
+                );
                 forms2.push(form);
             }
         }
@@ -23051,14 +23066,15 @@ class NodeRestClient {
             parameters: params,
             headers: this.headers
         };
-        this.client.get(url, args, function(datas, response) {
+        var req = this.client.get(url, args, function(datas, response) {
             if (response.statusCode === 200) {
                 success(datas, response);
             } 
-            else {
-                error(datas, response);
+            else if (response.statusCode >= 400) {
+                errorHandle(datas, response, error);
             }
         });
+        req.on('error', netErrorHandle.bind(this, error));
     }
     
     post (url, params, success, error) {
@@ -23067,14 +23083,15 @@ class NodeRestClient {
             data: params,
             headers: headers
         };
-        this.client.post(url, args, function(datas, response) {
+        var req = this.client.post(url, args, function(datas, response) {
             if (response.statusCode === 200) {
                 success(datas, response);
             } 
-            else {
-                error(datas, response);
+            else if (response.statusCode >= 400) {
+                errorHandle(datas, response, error);
             }
         });
+        req.on('error', netErrorHandle.bind(this, error));
     }
     
     put (url, params, success, error) {
@@ -23087,28 +23104,30 @@ class NodeRestClient {
             data: params,
             headers: headers
         };
-        this.client.put(url, args, function(datas, response) {
+        var req = this.client.put(url, args, function(datas, response) {
             if (response.statusCode === 200) {
                 success(datas, response);
             } 
-            else {
-                error(datas, response);
+            else if (response.statusCode >= 400) {
+                errorHandle(datas, response, error);
             }
         });
+        req.on('error', netErrorHandle.bind(this, error));
     }
     
     destroy (url, success, error) {
         var args = {
             headers: this.headers
         };
-        this.client.delete(url, args, function(datas, response) {
+        var req = this.client.delete(url, args, function(datas, response) {
             if (response.statusCode === 200) {
                 success(datas, response);
             } 
-            else {
-                error(datas, response);
+            else if (response.statusCode >= 400) {
+                errorHandle(datas, response, error);
             }
         });
+        req.on('error', netErrorHandle.bind(this, error));
     }
 }
 
@@ -23130,19 +23149,48 @@ class Auth {
     }
     
     renew (success, error) {
-        this.client.get(
-            this.authUrl, this.args, 
-            function(datas, response) {
-                if (response.statusCode === 200) {
-                    success(datas.url, datas.token, datas.expiredIn);
-                } 
-                else {
-                    error(datas, response);
-                }
+        var req = this.client.get(this.authUrl, this.args, function(datas, response) {
+            if (response.statusCode === 200) {
+                success(datas.url, datas.token, datas.expiredIn);
+            } 
+            else if (response.statusCode >= 400) {
+                errorHandle(datas, response, error);
             }
-        );
+        });
+        req.on('error', netErrorHandle.bind(this, error));
     }
 }
+
+function errorHandle (datas, response, error) {
+
+    if (typeof error === "function") {
+        error(datas, response);
+    }
+    
+    if (globalErrorHandle) {
+        globalErrorHandle(datas, response);
+    }  
+}
+
+// Network error handler
+function netErrorHandle (error) {
+
+    // 000 is a common code to use when no HTTP code was received due to a network error
+    errorHandle(
+        { 
+            networkError: 0,
+            internalMessage: "Erreur réseau",
+            userMessage: "Erreur réseau"
+        },
+        {
+            statusCode: 0
+        },
+        error
+    );
+}
+
+// Default global error handler
+var globalErrorHandle = 0;
 
 exports.Client = Client;
 

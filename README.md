@@ -20,25 +20,66 @@ Alternativement **rhapi-client-browser.js** (généré par browserify) est fourn
     var client = new Client("https://demo.rhapi.net/demo01");
     // les groupes/méthodes RHAPI sont accessibles ici
 
-### Idem avec import (ES6, Babel)
+### Idem avec import (ES6, Babel) et gestion globale des erreurs
 
     import { Client } from 'rhapi-client';
-    var client = new Client("https://demo.rhapi.net/demo01");
+    var client = new Client(
+        "https://demo.rhapi.net/demo01"),
+        (datas, response) => { // Gestion globale des erreurs
+            console.log('Erreur :');
+            console.log(datas); // le code erreur est retourné par datas.networkError
+            console.log(response); // datas.networkError === response.statusCode
+        }
+    );
     // les groupes/méthodes RHAPI sont accessibles ici
+    // ex. lecture du patient d'id 5 
+    client.Patients.read(
+        5,
+        {},
+        (patient) => {
+            console.log('Résultat :');
+            console log(patient);
+        }
+    );
     
-### Instancier un client avec authentification (production)
+### Instancier un client avec authentification et gestions (globale et unitaire) des erreurs (production)
 
     var Client = require("rhapi-client").Client;
-    var client = new Client();
+    function globalErrorHandler(datas, response) {
+        console.log('Erreur (global) : ', datas.networkError); // eq response.statusCode
+        if (response.statusCode === 404) {
+            // ...
+        }
+        // else ...
+    }
+    var client = new Client(globalErrorHandler);
     client.authorize(
         //   auth url                     app token            username    password
         "https://auth-dev.rhapi.net", "VGVzdEFwcDpUZXN0QXBw", "TestUser", "TestUser",
         function() { // success
             // auth ok
             // les groupes/méthodes RHAPI sont accessibles ici
+            // ex. lecture du patient d'id 5 
+            client.Patients.read(
+                5,
+                {},
+                function(patient) {
+                    console.log('Patient 5 :');
+                    console log(patient);
+                },
+                // la fonction suivante peut est omise. Seule la
+                // fonction globalErrorHandler serait alors appelée
+                function(datas, response) {
+                    // une erreur en lecture patient provoquera un appel
+                    // à cette fonction puis un appel à globalErrorHandler
+                    console.log('Erreur (patient) : ' + datas.networkError);
+                }
+            );
         },
         function(datas, response) {
-            console.log(datas); // erreur d'authentification
+            // une erreur d'authentification provoquera un appel
+            // à cette fonction puis un appel à globalErrorHandler
+            console.log(datas); // erreur d'authentification ?
             console.log(response);
             // erreur username/password ?
             // essayer à nouveau ?

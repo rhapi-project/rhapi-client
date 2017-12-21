@@ -25,5 +25,5 @@
     "url": "git+https://github.com/rhapi-project/rhapi-client.git"
   },
   "scripts": {},
-  "version": "1.0.2"
+  "version": "1.0.3"
 }
