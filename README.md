@@ -50,7 +50,7 @@ client.Patients.read(
 );
 ```
     
-### Instancier un client avec authentification et gestions (globale et unitaire) des erreurs (production)
+### Instancier un client avec authentification et gestion (globale et unitaire) des erreurs
 
 ```javascript
 var Client = require("rhapi-client").Client;
