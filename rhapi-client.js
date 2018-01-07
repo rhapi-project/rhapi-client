@@ -205,8 +205,8 @@ class Client {
                 self.destroy(url, success, error);
             },
             
-            actualiser : function (params, success, error) {
-                var url = self.baseUrl + "/Plannings/actualiser";
+            actualiser : function (search, params, success, error) {
+                var url = self.baseUrl + "/Plannings/" + search + "/actualiser";
                 self.get(url, params, success, error);
             }
         };
@@ -240,6 +240,28 @@ class Client {
                 var url = self.baseUrl + "/RendezVous/actualiser";
                 self.get(url, params, success, error);
             }
+        };
+        
+        this.Reservation = {
+            create : function (params, success, error) {
+                self.post(self.baseUrl + "/Reservation", params, success, error);
+            },
+            
+            readAll : function (params, success, error) {
+                var url = self.baseUrl + "/Reservation";
+                self.get(url, params, success, error);
+            },
+            
+            mesRendezVous : function (params, success, error) {
+                var url = self.baseUrl + "/Reservation/mesRendezVous";
+                self.get(url, params, success, error);
+            },
+            
+            mesPlannings : function (params, success, error) {
+                var url = self.baseUrl + "/Reservation/mesPlannings";
+                self.get(url, params, success, error);
+            }
+            
         };
 
     } // constructor ends
