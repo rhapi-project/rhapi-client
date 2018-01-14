@@ -22973,9 +22973,24 @@ class Client {
                 self.post(self.baseUrl + "/Reservation", params, success, error);
             },
             
+            read : function (search, params, success, error) {
+                var url = self.baseUrl + "/Reservation/" + search;
+                self.get(url, params, success, error);
+            },
+            
             readAll : function (params, success, error) {
                 var url = self.baseUrl + "/Reservation";
                 self.get(url, params, success, error);
+            },
+            
+            update : function (search, params, success, error) {
+                var url = self.baseUrl + "/Reservation/" + search;
+                self.put(url, params, success, error);
+            },
+            
+            annuler : function (search, params, success, error) {
+                var url = self.baseUrl + "/Reservation/" + search + "/annuler";
+                self.put(url, params, success, error);
             },
             
             mesRendezVous : function (params, success, error) {
