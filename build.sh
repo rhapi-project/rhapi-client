@@ -20,6 +20,5 @@ npx babel --presets env rhapi-client-es7.js --out-file rhapi-client.js
 
 # rhapi-client.js => rhapi-client-browser.js
 # sed replace => require('/rhapi-client.js') => require('rhapi-client')
+
 browserify  -r ./rhapi-client.js | sed  's/\/rhapi-client.js/rhapi-client/' > ./rhapi-client-browser.js
-
-
