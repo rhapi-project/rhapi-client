@@ -6,7 +6,11 @@
     "node-rest-client": "^3.1.0"
   },
   "description": "Un client RHAPI JavaScript",
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "browserify": "^15.2.0"
+  },
   "directories": {},
   "homepage": "https://github.com/rhapi-project/rhapi-client",
   "license": "MIT",
@@ -19,11 +23,13 @@
   ],
   "name": "rhapi-client",
   "optionalDependencies": {},
-  "readme": "ERROR: No README data found!",
+  "readme": "Un client RHAPI JavaScript",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rhapi-project/rhapi-client.git"
   },
-  "scripts": {},
-  "version": "1.0.5"
+  "scripts": {
+    "build": "./build.sh"
+  },
+  "version": "1.0.7"
 }
