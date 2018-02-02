@@ -5,7 +5,7 @@
 # ------------------------------------------------------------------
 # rhapi-client-es7.js     : es7/es2016/2017(dev)
 # rhapi-client.js         : es5
-# rhapi-client-browser.js : es5 (browser)
+# rhapi-client-browser.js : es5 (browserify adds required)
 
 # babel-preset-env : 
 # ------------------
@@ -19,6 +19,7 @@
 npx babel --presets env rhapi-client-es7.js --out-file rhapi-client.js
 
 # rhapi-client.js => rhapi-client-browser.js
+# sed replace => require('/rhapi-client.js') => require('rhapi-client')
 browserify  -r ./rhapi-client.js | sed  's/\/rhapi-client.js/rhapi-client/' > ./rhapi-client-browser.js
 
 
