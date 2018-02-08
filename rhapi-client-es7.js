@@ -195,6 +195,11 @@ class Client {
                 self.get(url, params, success, error);
             },
             
+            mesPlannings : function (params, success, error) {
+                var url = self.baseUrl + "/Plannings/mesPlannings";
+                self.get(url, params, success, error);
+            },
+            
             update : function (search, params, success, error) {
                 var url = self.baseUrl + "/Plannings/" + search;
                 self.put(url, params, success, error);
