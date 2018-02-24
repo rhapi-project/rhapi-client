@@ -17,7 +17,7 @@
   "main": "rhapi-client.js",
   "maintainers": [
     {
-      "name": "lambdasoft",
+      "name": "Lambdasoft",
       "email": "contact@lambdasoft.fr"
     }
   ],
@@ -31,5 +31,5 @@
   "scripts": {
     "build": "./build.sh"
   },
-  "version": "1.0.9"
+  "version": "1.0.10"
 }

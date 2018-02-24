@@ -395,7 +395,16 @@ var NodeRestClient = function () {
             var req = this.client.get(url, args, function (datas, response) {
                 if (response.statusCode === 200) {
                     success(datas, response);
-                } else if (response.statusCode >= 400) {
+                } else {
+                    // réponses non documentées par le serveur 
+                    if (response.statusCode < 400) {
+                        var message = response.statusCode === 304 ? "Contenu non modifié" : "Code " + response.statusCode;
+                        datas = {
+                            networkError: response.statusCode,
+                            internalMessage: message,
+                            userMessage: message
+                        };
+                    }
                     errorHandle(datas, response, error);
                 }
             });
@@ -412,7 +421,7 @@ var NodeRestClient = function () {
             var req = this.client.post(url, args, function (datas, response) {
                 if (response.statusCode === 200) {
                     success(datas, response);
-                } else if (response.statusCode >= 400) {
+                } else {
                     errorHandle(datas, response, error);
                 }
             });
@@ -433,7 +442,7 @@ var NodeRestClient = function () {
             var req = this.client.put(url, args, function (datas, response) {
                 if (response.statusCode === 200) {
                     success(datas, response);
-                } else if (response.statusCode >= 400) {
+                } else {
                     errorHandle(datas, response, error);
                 }
             });
@@ -448,7 +457,7 @@ var NodeRestClient = function () {
             var req = this.client.delete(url, args, function (datas, response) {
                 if (response.statusCode === 200) {
                     success(datas, response);
-                } else if (response.statusCode >= 400) {
+                } else {
                     errorHandle(datas, response, error);
                 }
             });
@@ -483,7 +492,7 @@ var Auth = function () {
             var req = this.client.get(this.authUrl, this.args, function (datas, response) {
                 if (response.statusCode === 200) {
                     success(datas.url, datas.token, datas.expiredIn);
-                } else if (response.statusCode >= 400) {
+                } else {
                     errorHandle(datas, response, error);
                 }
             });

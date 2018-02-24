@@ -386,7 +386,17 @@ class NodeRestClient {
             if (response.statusCode === 200) {
                 success(datas, response);
             } 
-            else if (response.statusCode >= 400) {
+            else {
+                // réponses non documentées par le serveur 
+                if (response.statusCode < 400) {
+                    var message = response.statusCode === 304 ? 
+                        "Contenu non modifié" : "Code " + response.statusCode
+                    datas = { 
+                        networkError: response.statusCode, 
+                        internalMessage: message, 
+                        userMessage: message
+                    }
+                }
                 errorHandle(datas, response, error);
             }
         });
@@ -403,7 +413,7 @@ class NodeRestClient {
             if (response.statusCode === 200) {
                 success(datas, response);
             } 
-            else if (response.statusCode >= 400) {
+            else {
                 errorHandle(datas, response, error);
             }
         });
@@ -424,7 +434,7 @@ class NodeRestClient {
             if (response.statusCode === 200) {
                 success(datas, response);
             } 
-            else if (response.statusCode >= 400) {
+            else {
                 errorHandle(datas, response, error);
             }
         });
@@ -439,7 +449,7 @@ class NodeRestClient {
             if (response.statusCode === 200) {
                 success(datas, response);
             } 
-            else if (response.statusCode >= 400) {
+            else {
                 errorHandle(datas, response, error);
             }
         });
@@ -469,7 +479,7 @@ class Auth {
             if (response.statusCode === 200) {
                 success(datas.url, datas.token, datas.expiredIn);
             } 
-            else if (response.statusCode >= 400) {
+            else {
                 errorHandle(datas, response, error);
             }
         });
