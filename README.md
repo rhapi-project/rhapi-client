@@ -4,9 +4,9 @@ Un client RHAPI JavaScript
 
 *RHAPI is a RESTful Health API*
 
-## Installation
-
 [![NPM](https://nodei.co/npm/rhapi-client.png?downloads=true)](https://www.npmjs.com/package/rhapi-client)
+
+## Installation
 
 ```
 npm install rhapi-client
