@@ -6,6 +6,8 @@ Un client RHAPI JavaScript
 
 ## Installation
 
+[![NPM](https://nodei.co/npm/rhapi-client.png?downloads=true)](https://www.npmjs.com/package/rhapi-client)
+
 ```
 npm install rhapi-client
 ```
