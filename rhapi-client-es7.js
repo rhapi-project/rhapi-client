@@ -136,7 +136,7 @@ class Client {
         
         this.MonCompte = {
             read : function (success, error) {
-                self.get(self.baseUrl + "/MonCompte", success, error);
+                self.get(self.baseUrl + "/MonCompte", {}, success, error);
             },
             
             update : function (params, success, error) {

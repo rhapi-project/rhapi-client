@@ -7285,7 +7285,7 @@ var Client = function () {
 
         this.MonCompte = {
             read: function read(success, error) {
-                self.get(self.baseUrl + "/MonCompte", success, error);
+                self.get(self.baseUrl + "/MonCompte", {}, success, error);
             },
 
             update: function update(params, success, error) {
