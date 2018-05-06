@@ -246,12 +246,17 @@ class Client {
                 self.get(url, params, success, error);
             },
             
-            liste:  function liste(params, success, error) {
+            mesRendezVous: function (params, success, error) {
+                var url = self.baseUrl + "/RendezVous/mesRendezVous";
+                self.get(url, params, success, error);
+            },
+            
+            liste:  function (params, success, error) {
                 var url = self.baseUrl + "/RendezVous/liste";
                 self.get(url, params, success, error);
             },
             
-            listeAction:  function listeAction(search, params, success, error) {
+            listeAction:  function (search, params, success, error) {
                 var url = self.baseUrl + "/RendezVous/liste/" + search;
                 self.put(url, params, success, error);
             }
