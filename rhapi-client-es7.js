@@ -299,6 +299,18 @@ class Client {
             
         };
 
+        this.Sms = {
+            create : function (params, success, error) {
+                self.post(self.baseUrl + "/Sms", params, success, error);
+            },
+            
+            readAll : function (params, success, error) {
+                var url = self.baseUrl + "/Sms";
+                self.get(url, params, success, error);
+            }
+            
+        };
+
     } // constructor ends
     
     authorize (authUrl, appToken, user, password, success, error) {

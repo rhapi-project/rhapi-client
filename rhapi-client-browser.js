@@ -7447,6 +7447,18 @@ var Client = function () {
             }
 
         };
+
+        this.Sms = {
+            create: function create(params, success, error) {
+                self.post(self.baseUrl + "/Sms", params, success, error);
+            },
+
+            readAll: function readAll(params, success, error) {
+                var url = self.baseUrl + "/Sms";
+                self.get(url, params, success, error);
+            }
+
+        };
     } // constructor ends
 
     _createClass(Client, [{

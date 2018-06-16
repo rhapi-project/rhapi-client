@@ -31,5 +31,5 @@
   "scripts": {
     "build": "./build.sh"
   },
-  "version": "1.0.13"
+  "version": "1.0.14"
 }
