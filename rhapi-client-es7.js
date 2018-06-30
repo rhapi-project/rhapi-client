@@ -177,6 +177,11 @@ class Client {
             completion : function (params, success, error) {
                 var url = self.baseUrl + "/Patients/completion";
                 self.get(url, params, success, error);
+            },
+            
+            telephones : function (params, success, error) {
+                var url = self.baseUrl + "/Patients/telephones";
+                self.get(url, params, success, error);
             }
         };
 
