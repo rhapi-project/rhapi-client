@@ -7436,6 +7436,11 @@ var Client = function () {
                 self.put(url, params, success, error);
             },
 
+            confirmation: function confirmation(search, success, error) {
+                var url = self.baseUrl + "/Reservation/confirmation/" + search;
+                self.get(url, {}, success, error);
+            },
+
             annuler: function annuler(search, params, success, error) {
                 var url = self.baseUrl + "/Reservation/" + search + "/annuler";
                 self.put(url, params, success, error);

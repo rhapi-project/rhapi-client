@@ -287,6 +287,11 @@ class Client {
                 self.put(url, params, success, error);
             },
             
+            confirmation : function (search, success, error) {
+                var url = self.baseUrl + "/Reservation/confirmation/" + search;
+                self.get(url, {}, success, error);
+            },
+            
             annuler : function (search, params, success, error) {
                 var url = self.baseUrl + "/Reservation/" + search + "/annuler";
                 self.put(url, params, success, error);
