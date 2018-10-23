@@ -9,6 +9,7 @@ class Client {
         else {
             if (typeof baseUrl === "string" && baseUrl !== "") {
                 this.baseUrl = baseUrl;
+                this.token = "";
                 this.client = new NodeRestClient();
             }
             
@@ -16,8 +17,6 @@ class Client {
                 globalErrorHandle = errorHandle;
             }
         }
-        
-        this.forms = [];
         
         var self = this;
         
@@ -218,6 +217,16 @@ class Client {
             actualiser : function (search, params, success, error) {
                 var url = self.baseUrl + "/Plannings/" + search + "/actualiser";
                 self.get(url, params, success, error);
+            },
+            
+            exportIcal : function (search, params, success, error) {
+                var url = self.baseUrl + "/Plannings/" + search + "/exportIcal";
+                self.get(url, params, success, error);
+            },
+            
+            importIcal : function (search, params, success, error) {
+                var url = self.baseUrl + "/Plannings/" + search + "/importIcal";
+                self.post(url, params, success, error);
             }
         };
         
@@ -334,7 +343,7 @@ class Client {
             function(url, token, expiredIn) {
                 if (url !== self.baseUrl) {
                     self.baseUrl = url;
-                    self.updateForms();
+                    self.token = token;
                 }
                 self.client = new NodeRestClient(token);
                 setTimeout(
@@ -349,39 +358,6 @@ class Client {
                 error(datas, response);
             }
         );
-    }
-    
-    addForm(form, group) {
-        form.setAttribute("action", this.baseUrl + "/" + group);
-        // pour màj dynamique avec nouveaux token/url => voir updateForms()
-        form.setAttribute("rhapi-group", group);
-        form.setAttribute("method", "post");
-        form.setAttribute("enctype", "multipart/form-data");
-        // Images -> image / Documents -> document
-        var name = group.toLowerCase().slice(0, -1);
-        var inputs = form.getElementsByTagName("input");
-        for (var i = 0; i < inputs.length; i++) { 
-            var input = inputs[i];
-            if (input.getAttribute("type") === "file") {
-                input.setAttribute("name", name);
-            }
-        }
-        this.forms.push(form);
-    }
-    
-    updateForms() {
-        var forms2 = [];
-        for (var i = 0; i < this.forms.length; i++) {
-            var form = this.forms[i];
-            if (document.body.contains(form)) {
-                form.setAttribute(
-                    "action", 
-                    this.baseUrl + "/" + form.getAttribute("rhapi-group")
-                );
-                forms2.push(form);
-            }
-        }
-        this.forms = forms2;
     }
         
     get (url, params, success, error) {
