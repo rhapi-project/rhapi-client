@@ -106,10 +106,11 @@ Les groupes, méthodes et paramètres utilisés par **rhapi-client** reprennent 
 
 Pour plus d'informations, il conviendra donc de se référer à la documentation **RHAPI** : https://demo.rhapi.net/apidoc01/.
 
-### Utiliser un formulaire d'envoi de fichier
+### Utiliser un formulaire pour l'envoi d'un fichier
 
 Pour l'envoi de fichiers, un formulaire standard HTML peut être utilisé.
 Le content-type doit alors être *multipart/form-data* afin de permettre l'envoi simultané des valeurs d'autres champs.
+
 Voici l'exemple minimaliste mais fonctionnel d'un formulaire d'envoi d'images.
 
 ```html
