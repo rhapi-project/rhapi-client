@@ -106,35 +106,11 @@ Les groupes, méthodes et paramètres utilisés par **rhapi-client** reprennent 
 
 Pour plus d'informations, il conviendra donc de se référer à la documentation **RHAPI** : https://demo.rhapi.net/apidoc01/.
 
-### Instancier un formulaire d'envoi de fichier
+### Utiliser un formulaire d'envoi de fichier
 
-La fonction **addForm(form, groupe)** permet d'instancier un formulaire HTML.
-
-La fonction **addForm(form, groupe)** permet de définir simplement tous les attributs nécessaires au bon fonctionnement du formulaire d'envoi de fichier.
-
-La fonction **addForm(form, groupe)** permet le cas échéant, une mise à jour dynamique de l'URL dans le cadre d'une utilisation avec **authorize()** .
-
-Par exemple avec **client.addForm(document.getElementById("form-test"), "Images")**
-
-Si avant l'appel addForm on a
-
-```html
-<form id="form-test"> 
-    <input type="file"/>
-    <input type="submit">
-</form>
-```
-
-Après addForm on obtiendra quelque chose comme
-
-```html
-<form id="form-test" action="https://demo.rhapi.net/demo01/Images" method="post" enctype="multipart/form-data"> 
-    <input name="image" type="file"/>
-    <input type="submit">
-</form>
-```
-     
-Voici l'exemple minimaliste mais fonctionnel d'un formulaire d'envoi d'images
+Pour l'envoi de fichiers, un formulaire standard HTML peut être utilisé.
+Le content-type doit alors être *multipart/form-data* afin de permettre l'envoi simultané des valeurs d'autres champs.
+Voici l'exemple minimaliste mais fonctionnel d'un formulaire d'envoi d'images.
 
 ```html
 <!-- 
