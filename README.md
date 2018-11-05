@@ -140,75 +140,74 @@ Voici l'exemple minimaliste mais fonctionnel d'un formulaire d'envoi d'images
 <!-- 
     form-exemple.html
 -->
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8"> 
-    <title>Images RHAPI - Formulaire d'envoi</title>
-    <style>
-        body {
-            margin: 20px;
-            font-family: Helvetica,Arial;
-            font-size: 24;
-        }
-        label {
-            color: #404040;
-        }
-        td {
-            padding: 10px;
-            background: #e0e0e0;
-        }
-    </style>
-    <script src="rhapi-client-browser.js"></script>
+  <meta charset="UTF-8"> 
+  <title>Images RHAPI - Formulaire d'envoi</title>
+  <style>
+    body {
+      margin: 20px;
+      font-family: Helvetica,Arial;
+      font-size: 24;
+    }
+    label {
+      color: #404040;
+    }
+    td {
+      padding: 10px;
+      background: #e0e0e0;
+    }
+  </style>
+  <script src="rhapi-client-browser.js"></script>
 </head>
 <body>
-    <!-- utilisation d'un iframe masqué comme cible du formulaire -->
-    <iframe name="result-frame" srcdoc="" onload="refresh(false);" style="display: none">
-    </iframe>
-    <form id="form-image" target="result-frame">
-        <input type="file"><br>
-        <label>L'identifiant du praticien est fixé à 500</label>
-        <input name="idPraticien" type="hidden" value=500><br>
-        <label>Choisissez l'identifiant du patient : </label>
-        <input name="idPatient" type="Number" min=1 max=1000 value=1><br>
-        <input type="submit" value="Valider l'enregistrement de l'image">
-    </form>
-    <input type="button" value="Effacer toutes les images" onclick="refresh(true)">
-    <table id="list"></table>
-    <script type="text/javascript">
-        var Client = require("rhapi-client").Client;
-        var client = new Client("https://demo.rhapi.net/demo01");
-        var form = document.getElementById("form-image");
-        client.addForm(form, "Images");
-        function refresh(removeAll) {
-            client.Images.readAll(
-                {
-                    _idPraticien: 500,
-                    limit: 1000,
-                    sort: "idPatient"
-                },
-                function(datas, response) {
-                    var l = datas.results.length;
-                    var list = "<th>Id Patient</th><th>Nom du fichier</th><th>Image</th>";
-                    for (var i = 0; i < l; i++) {
-                        var image = datas.results[i];
-                        if (removeAll) {
-                            client.Images.destroy(image.id, function() {}, function() {});
-                        }
-                        else {
-                            list += "<tr><td>" + image.idPatient + 
-                                    "</td><td>" + image.fileName + 
-                                    "</td><td><image src='" + image.image + "'>";
-                        }
-                    }
-                    document.getElementById("list").innerHTML = list;
-                },
-                function(datas, response) {
-                    console.log("error");
-                    console.log(datas);
-                }
-            );
+  <!-- utilisation d'un iframe masqué comme cible du formulaire -->
+  <iframe name="result-frame" srcdoc="" onload="refresh(false);" style="display: none">
+  </iframe>
+  <form id="form-image" action="https://demo.rhapi.net/demo01/Images" method="post" target="result-frame" enctype="multipart/form-data">
+    <input name="image" type="file"><br>
+    <label>L'identifiant du praticien est fixé à 500</label>
+    <input name="idPraticien" type="hidden" value=500><br>
+    <label>Choisissez l'identifiant du patient : </label>
+    <input name="idPatient" type="Number" min=1 max=1000 value=1><br>
+    <input type="submit" value="Valider l'enregistrement de l'image">
+  </form>
+  <input type="button" value="Effacer toutes les images" onclick="refresh(true)">
+  <table id="list"></table>
+  <script type="text/javascript">
+    let Client = require("rhapi-client").Client;
+    let client = new Client("https://demo.rhapi.net/demo01");
+    function refresh(removeAll) {
+      client.Images.readAll(
+        {
+          _idPraticien: 500,
+          limit: 1000,
+          sort: "idPatient"
+        },
+        function(datas, response) {
+          let l = datas.results.length;
+          let list = "<th>Id Patient</th><th>Nom du fichier</th><th>Image</th>";
+          for (let i = 0; i < l; i++) {
+            let image = datas.results[i];
+            if (removeAll) {
+                client.Images.destroy(image.id, function() {}, function() {});
+            }
+            else {
+                list += "<tr><td>" + image.idPatient + 
+                        "</td><td>" + image.fileName + 
+                        "</td><td><image src='" + image.image + "'>";
+            }
+          }
+          document.getElementById("list").innerHTML = list;
+        },
+        function(datas, response) {
+          console.log("error");
+          console.log(datas);
         }
-    </script>
+      );
+    };
+  </script>
 </body>
 </html>
 ```
