@@ -44,6 +44,32 @@ class Client {
             }
         };
         
+        this.Actes = {
+            create : function (params, success, error) {
+                self.post(self.baseUrl + "/Actes", params, success, error);
+            },
+            
+            read : function (search, params, success, error) {
+                var url = self.baseUrl + "/Actes/" + search;
+                self.get(url, params, success, error);
+            },
+            
+            readAll : function (params, success, error) {
+                var url = self.baseUrl + "/Actes";
+                self.get(url, params, success, error);
+            },
+            
+            update : function (search, params, success, error) {
+                var url = self.baseUrl + "/Actes/" + search;
+                self.put(url, params, success, error);
+            },
+            
+            destroy : function (search, success, error) {
+                var url = self.baseUrl + "/Actes/" + search;
+                self.destroy(url, success, error);
+            }
+        };
+        
         this.CCAM = {
             read : function (search, params, success, error) {
                 var url = self.baseUrl + "/CCAM/" + search;
