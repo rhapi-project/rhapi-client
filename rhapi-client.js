@@ -74,6 +74,32 @@ var Client = function () {
             }
         };
 
+        this.Documents = {
+            create: function create(params, success, error) {
+                self.post(self.baseUrl + "/Documents", params, success, error);
+            },
+
+            read: function read(search, params, success, error) {
+                var url = self.baseUrl + "/Documents/" + search;
+                self.get(url, params, success, error);
+            },
+
+            readAll: function readAll(params, success, error) {
+                var url = self.baseUrl + "/Documents";
+                self.get(url, params, success, error);
+            },
+
+            update: function update(search, params, success, error) {
+                var url = self.baseUrl + "/Documents/" + search;
+                self.put(url, params, success, error);
+            },
+
+            destroy: function destroy(search, success, error) {
+                var url = self.baseUrl + "/Documents/" + search;
+                self.destroy(url, success, error);
+            }
+        };
+
         this.CCAM = {
             read: function read(search, params, success, error) {
                 var url = self.baseUrl + "/CCAM/" + search;
