@@ -375,6 +375,11 @@ class Client {
                 self.post(self.baseUrl + "/Sms", params, success, error);
             },
             
+            read : function (search, params, success, error) {
+                var url = self.baseUrl + "/Sms/" + search;
+                self.get(url, params, success, error);
+            },
+            
             readAll : function (params, success, error) {
                 var url = self.baseUrl + "/Sms";
                 self.get(url, params, success, error);
